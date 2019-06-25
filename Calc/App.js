@@ -7,23 +7,48 @@
  */
 
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
+import {Button, StyleSheet, Text, View, TextInput, TouchableOpacity} from 'react-native';
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-  android:
-    'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
-
-type Props = {};
-export default class App extends Component<Props> {
+export default class App extends Component<> {
   render() {
+    let rows = [];
+    for (let i=0; i<3; i++){
+      let row = [];
+      for (let j=0; j<3; j++) {
+        row.push(
+            <TouchableOpacity style={styles.button}>
+              <Text style={styles.buttonText}>{j+i*3+1}</Text>
+            </TouchableOpacity>)
+      }
+      rows.push(<View style={styles.row}>{row}</View>)
+    }
+
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to React Native!</Text>
-        <Text style={styles.instructions}>To get started, edit App.js</Text>
-        <Text style={styles.instructions}>{instructions}</Text>
+        <View style={styles.calculation}>
+          <Text style={styles.calculationText}> 10,000/100</Text>
+        </View>
+        <View style={styles.result}>
+          <Text style={styles.resultText}>100</Text>
+        </View>
+        <View style={styles.buttons}>
+          <View style={styles.numbers}>
+            {rows}
+            <View style={styles.row}>
+              <TouchableOpacity style={styles.button}><Text style={styles.buttonText}>+/-</Text></TouchableOpacity>
+              <TouchableOpacity style={styles.button}><Text style={styles.buttonText}>0</Text></TouchableOpacity>
+              <TouchableOpacity style={styles.button}><Text style={styles.buttonText}>.</Text></TouchableOpacity>
+            </View>
+
+          </View>
+          <View style={styles.operations}>
+            <TouchableOpacity style={styles.button}><Text style={styles.buttonText}>=</Text></TouchableOpacity>
+            <TouchableOpacity style={styles.button}><Text style={styles.buttonText}>+</Text></TouchableOpacity>
+            <TouchableOpacity style={styles.button}><Text style={styles.buttonText}>-</Text></TouchableOpacity>
+            <TouchableOpacity style={styles.button}><Text style={styles.buttonText}>X</Text></TouchableOpacity>
+            <TouchableOpacity style={styles.button}><Text style={styles.buttonText}>/</Text></TouchableOpacity>
+          </View>
+        </View>
       </View>
     );
   }
@@ -32,18 +57,56 @@ export default class App extends Component<Props> {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+  },
+  row: {
+    flexDirection: 'row',
+    flex: 1,
+    justifyContent: 'space-around',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
   },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
+  calculation: {
+    flex: 2,
+    backgroundColor: 'red',
+    justifyContent: 'center',
+    alignItems: 'flex-end',
+    paddingEnd: 10,
   },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
+  calculationText: {
+    fontSize: 40,
+    color: 'white',
   },
+  result: {
+    flex: 1,
+    backgroundColor: 'green',
+    justifyContent: 'center',
+    alignItems: 'flex-end',
+    paddingEnd: 10,
+  },
+  resultText: {
+    fontSize: 25,
+    color: 'white',
+  },
+  button: {
+    flex:1,
+    alignItems: 'center',
+    alignSelf: 'stretch',
+    justifyContent: 'center',
+  },
+  buttonText: {
+    fontSize: 25,
+    color: 'white'
+  },
+  buttons: {
+    flexDirection: 'row',
+    flex: 7,
+  },
+  numbers: {
+    flex: 3,
+    backgroundColor: 'grey',
+  },
+  operations: {
+    flex: 1,
+    justifyContent: 'space-around',
+    backgroundColor: 'black',
+  }
 });
